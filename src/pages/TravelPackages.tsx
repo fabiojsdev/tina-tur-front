@@ -5,34 +5,38 @@ const WHATSAPP = "5511999999999";
 
 type Category = "todos" | "praia" | "natureza" | "aventura" | "cultural" | "internacional";
 
-// Adapta o PacoteAPI do backend para o formato que os componentes usam
 type Package = PacoteAPI & {
   title: string;
   destination: string;
   price: string;
+  duration: string;       // ← estava faltando no adaptPackage
+  description: string;    // ← estava faltando no adaptPackage
   category: string;
   imageUrl: string;
-  featured?: boolean;
+  featured: boolean;
 };
 
+// ✅ Mapeia TODOS os campos do backend para os nomes usados nos componentes
 function adaptPackage(p: PacoteAPI): Package {
   return {
     ...p,
-    title: p.titulo,
-    destination: p.destino,
-    price: p.preco,
-    category: (p.categoria ?? "PRAIA").toLowerCase(),
-    imageUrl: p.imagemUrl ?? "",
-    featured: p.destaque,
+    title:       (p.titulo    as string)  ?? "",
+    destination: (p.destino   as string)  ?? "",
+    price:       (p.preco     as string)  ?? "",
+    duration:    (p.duracao   as string)  ?? "",   // ← corrigido
+    description: (p.descricao as string)  ?? "",   // ← corrigido
+    category:    ((p.categoria as string) ?? "PRAIA").toLowerCase(),
+    imageUrl:    (p.imagemUrl as string)  ?? "",
+    featured:    (p.destaque  as boolean) ?? false,
   };
 }
 
 const CATEGORY_LABELS: Record<Category, string> = {
-  todos: "Todos",
-  praia: "Praia",
-  natureza: "Natureza",
-  aventura: "Aventura",
-  cultural: "Cultural",
+  todos:         "Todos",
+  praia:         "Praia",
+  natureza:      "Natureza",
+  aventura:      "Aventura",
+  cultural:      "Cultural",
   internacional: "Internacional",
 };
 
@@ -46,7 +50,7 @@ function PackageCard({ pkg }: { pkg: Package }) {
     <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-400 group flex flex-col">
       {/* Image */}
       <div className="relative h-52 overflow-hidden">
-        {!imgError ? (
+        {!imgError && pkg.imageUrl ? (
           <img
             src={pkg.imageUrl}
             alt={pkg.title}
@@ -75,12 +79,14 @@ function PackageCard({ pkg }: { pkg: Package }) {
         </div>
 
         {/* Location */}
-        <p className="absolute bottom-3 left-3 text-white/80 text-xs flex items-center gap-1">
-          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-          </svg>
-          {pkg.destination}
-        </p>
+        {pkg.destination && (
+          <p className="absolute bottom-3 left-3 text-white/80 text-xs flex items-center gap-1">
+            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+            </svg>
+            {pkg.destination}
+          </p>
+        )}
       </div>
 
       {/* Content */}
@@ -91,20 +97,26 @@ function PackageCard({ pkg }: { pkg: Package }) {
         >
           {pkg.title}
         </h3>
-        <p className="text-gray-500 text-sm leading-relaxed mb-4 flex-1 line-clamp-3">
-          {String(pkg.description) || ""}
-        </p>
 
-        {/* Duration */}
-        <div className="flex items-center gap-1.5 text-gray-400 text-xs mb-4">
-          <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z" />
-          </svg>
-          {String(pkg.duration) || ""}
-        </div>
+        {/* Descrição — agora vem corretamente da API */}
+        {pkg.description && (
+          <p className="text-gray-500 text-sm leading-relaxed mb-4 flex-1 line-clamp-3">
+            {pkg.description}
+          </p>
+        )}
+
+        {/* Duração — agora vem corretamente da API */}
+        {pkg.duration && (
+          <div className="flex items-center gap-1.5 text-gray-400 text-xs mb-4">
+            <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z" />
+            </svg>
+            {pkg.duration}
+          </div>
+        )}
 
         {/* Price + CTA */}
-        <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+        <div className="flex items-center justify-between pt-4 border-t border-gray-100 mt-auto">
           <div>
             <p className="text-xs text-gray-400 uppercase tracking-wide">A partir de</p>
             <p
@@ -185,21 +197,9 @@ export default function TravelPackages() {
             Encontre o pacote perfeito para você. Todas as nossas viagens incluem
             assistência completa e o melhor custo-benefício do mercado.
           </p>
-
-          {/* Search bar */}
           <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl px-5 py-3 max-w-lg">
-            <svg
-              className="w-5 h-5 text-white/50 flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
+            <svg className="w-5 h-5 text-white/50 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
             <input
               type="text"
@@ -239,7 +239,6 @@ export default function TravelPackages() {
       {/* ─── PACKAGES GRID ─────────────────────────────────────────────────── */}
       <section className="py-14 px-5 bg-[#f9f6f0]">
         <div className="max-w-7xl mx-auto">
-          {/* Loading skeleton */}
           {loading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {Array.from({ length: 8 }).map((_, i) => (
@@ -249,7 +248,6 @@ export default function TravelPackages() {
                     <div className="h-4 bg-gray-200 rounded w-3/4" />
                     <div className="h-3 bg-gray-100 rounded w-1/2" />
                     <div className="h-3 bg-gray-100 rounded w-full" />
-                    <div className="h-3 bg-gray-100 rounded w-5/6" />
                     <div className="h-10 bg-gray-200 rounded-xl mt-4" />
                   </div>
                 </div>
@@ -262,10 +260,8 @@ export default function TravelPackages() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </div>
-              <p
-                className="text-[#1a2744] text-xl font-bold mb-2"
-                style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
-              >
+              <p className="text-[#1a2744] text-xl font-bold mb-2"
+                style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
                 Nenhum pacote encontrado
               </p>
               <p className="text-gray-500 text-sm">
@@ -287,15 +283,13 @@ export default function TravelPackages() {
         </div>
       </section>
 
-      {/* ─── CTA WHATSAPP ──────────────────────────────────────────────────── */}
+      {/* ─── CTA ───────────────────────────────────────────────────────────── */}
       <section className="bg-[#1a2744] py-16 px-5 text-center">
         <p className="text-[#d4a853] text-xs font-bold tracking-[0.3em] uppercase mb-3">
           Não encontrou o que procura?
         </p>
-        <h2
-          className="text-white text-3xl font-bold mb-4"
-          style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
-        >
+        <h2 className="text-white text-3xl font-bold mb-4"
+          style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
           Montamos o roteiro ideal para você
         </h2>
         <p className="text-white/50 mb-7 text-sm max-w-md mx-auto">

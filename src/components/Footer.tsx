@@ -9,7 +9,7 @@ export default function Footer() {
       <div className="bg-[#d4a853] py-10 px-5 text-center">
         <p
           className="text-[#1a2744] text-2xl md:text-3xl font-bold mb-2"
-          style={{ fontFamily: "'Playfair Display', serif" }}
+          style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
         >
           Pronto para a sua próxima aventura?
         </p>
@@ -31,6 +31,7 @@ export default function Footer() {
 
       {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-5 py-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+
         {/* Brand */}
         <div>
           <div className="flex items-center gap-2 mb-4">
@@ -41,7 +42,7 @@ export default function Footer() {
             </div>
             <span
               className="text-white text-xl font-bold tracking-widest"
-              style={{ fontFamily: "'Playfair Display', serif" }}
+              style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
             >
               TINA TUR
             </span>
@@ -67,20 +68,17 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Links */}
+        {/* Navegação — sem Destinos */}
         <div>
-          <h4
-            className="text-[#d4a853] text-sm font-bold tracking-widest uppercase mb-5"
-          >
+          <h4 className="text-[#d4a853] text-sm font-bold tracking-widest uppercase mb-5">
             Navegação
           </h4>
           <ul className="space-y-3">
             {[
-              { label: "Início", path: "/" },
-              { label: "Sobre Nós", path: "/sobre" },
+              { label: "Início",           path: "/" },
+              { label: "Sobre Nós",        path: "/sobre" },
               { label: "Pacotes de Viagem", path: "/pacotes" },
-              { label: "Destinos", path: "/destinos" },
-              { label: "Contato", path: "/contato" },
+              { label: "Contato",          path: "/contato" },
             ].map((l) => (
               <li key={l.path}>
                 <Link
@@ -94,10 +92,10 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Destinos */}
+        {/* Pacotes Populares — links apontam para /pacotes */}
         <div>
           <h4 className="text-[#d4a853] text-sm font-bold tracking-widest uppercase mb-5">
-            Destinos Populares
+            Pacotes Populares
           </h4>
           <ul className="space-y-3">
             {[
@@ -110,7 +108,7 @@ export default function Footer() {
             ].map((d) => (
               <li key={d}>
                 <Link
-                  to="/destinos"
+                  to="/pacotes"
                   className="text-white/50 text-sm hover:text-[#d4a853] transition-colors duration-200"
                 >
                   {d}
@@ -128,36 +126,24 @@ export default function Footer() {
           <ul className="space-y-4">
             {[
               {
-                icon: (
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-                ),
+                icon: <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />,
                 text: "Av. Paulista, 1000\nSão Paulo – SP",
               },
               {
-                icon: (
-                  <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
-                ),
+                icon: <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />,
                 text: "(11) 99999-9999",
               },
               {
-                icon: (
-                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-                ),
+                icon: <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />,
                 text: "contato@tinatur.com.br",
               },
               {
-                icon: (
-                  <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z" />
-                ),
+                icon: <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z" />,
                 text: "Seg–Sex: 9h–18h\nSáb: 9h–13h",
               },
             ].map((item, i) => (
               <li key={i} className="flex items-start gap-3">
-                <svg
-                  className="w-4 h-4 text-[#d4a853] mt-0.5 flex-shrink-0"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
+                <svg className="w-4 h-4 text-[#d4a853] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
                   {item.icon}
                 </svg>
                 <span className="text-white/50 text-sm whitespace-pre-line leading-relaxed">
