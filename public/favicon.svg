@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Fundo navy -->
+  <circle cx="32" cy="32" r="32" fill="#1a2744"/>
+
+  <!-- Sol dourado (arco superior) -->
+  <path d="M 10 34 A 22 22 0 0 1 54 34" fill="#E8A020"/>
+
+  <!-- Raios do sol -->
+  <line x1="32" y1="8" x2="32" y2="3"  stroke="#E8A020" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="48" y1="13" x2="51" y2="9" stroke="#E8A020" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="16" y1="13" x2="13" y2="9" stroke="#E8A020" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="57" y1="29" x2="62" y2="29" stroke="#E8A020" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="7"  y1="29" x2="2"  y2="29" stroke="#E8A020" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Terra/colina -->
+  <ellipse cx="32" cy="39" rx="20" ry="7" fill="#1a2744"/>
+
+  <!-- Letra T centralizada -->
+  <text
+    x="32" y="43"
+    font-family="Georgia, serif"
+    font-size="20"
+    font-weight="bold"
+    fill="white"
+    text-anchor="middle"
+    dominant-baseline="middle"
+    letter-spacing="1"
+  >T</text>
+
+  <!-- Linha da estrada -->
+  <rect x="12" y="43" width="40" height="2" rx="1" fill="#E8A020" opacity="0.5"/>
+</svg>

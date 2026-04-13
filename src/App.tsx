@@ -47,7 +47,7 @@ function FloatingButtons() {
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         aria-label="Voltar ao topo"
-        className={`fixed right-5 bottom-8 z-50 w-12 h-12 bg-[#1a2744] text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-[#d4a853] transition-all duration-300 ${
+        className={`fixed right-5 bottom-8 z-50 w-12 h-12 bg-[#1a2744] text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-[#E8A020] transition-all duration-300 ${
           showTop ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6 pointer-events-none"
         }`}
       >
@@ -60,18 +60,11 @@ function FloatingButtons() {
 }
 
 export default function App() {
-  useEffect(() => {
-    if (!document.getElementById("tina-tur-fonts")) {
-      const link = document.createElement("link");
-      link.id = "tina-tur-fonts";
-      link.rel = "stylesheet";
-      link.href =
-        "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap";
-      document.head.appendChild(link);
-    }
-    document.body.style.fontFamily = "'Lora', Georgia, serif";
-  }, []);
-
+  /*
+   * As fontes agora são carregadas via <link> no index.html (preconnect + stylesheet).
+   * O bloco useEffect que as injetava via JS foi removido para evitar
+   * duplicação e melhorar o First Contentful Paint.
+   */
   return (
     <Router>
       <ScrollToTopOnNavigate />
@@ -83,7 +76,6 @@ export default function App() {
           <Route path="/pacotes" element={<TravelPackages />} />
           <Route path="/contato" element={<Contact />} />
           <Route path="/admin"   element={<AdminPackages />} />
-          {/* ✅ /destinos removido */}
         </Routes>
         <Footer />
         <FloatingButtons />
